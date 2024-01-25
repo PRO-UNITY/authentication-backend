@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "authen",
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -172,3 +173,6 @@ SWAGGER_SETTINGS = {
 }
 
 AUTH_USER_MODEL = "authen.CustomUser"
+
+
+FORCE_SCRIPT_NAME = "/auth-app"
