@@ -153,6 +153,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 # cors
 CORS_ALLOWED_ORIGINS = [
+    "https://register-app.prounity.uz",
     "http://localhost:3000",
     "http://localhost:5174",
     "http://localhost:5173",
