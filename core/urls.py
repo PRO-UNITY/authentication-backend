@@ -12,10 +12,10 @@ admin.site.site_url = None
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Todo project API",
+      title="Authentication API",
       default_version='v1',
-      description="Todo",
-      terms_of_service="http://127.0.0.1:8000/swagger/",
+      description="Authentication",
+      terms_of_service="https://register-app.prounity.uz/api/swagger",
       contact=openapi.Contact(email="istamovibrohim8@gmail.com"),
       license=openapi.License(name="BSD License"),
    ),

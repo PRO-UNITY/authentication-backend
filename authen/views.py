@@ -1,4 +1,5 @@
 import random
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -12,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.filters import SearchFilter
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import action
 from authen.renderers import UserRenderers
@@ -232,8 +234,15 @@ class CountrViews(APIView):
 
 
 class GenderViews(APIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['name'] 
 
     def get(self, request):
-        objects_list = Gender.objects.all()
-        serializers = GenderSerializers(objects_list, many=True)
-        return Response(serializers.data, status=status.HTTP_200_OK)
+        queryset = Gender.objects.all()
+        name = request.query_params.get("name", None)
+        if name:
+            queryset = queryset.filter(Q(name__icontains=name))
+            if not queryset.exists():
+                return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = GenderSerializers(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
