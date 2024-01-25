@@ -226,11 +226,18 @@ class SetNewPasswordView(generics.GenericAPIView):
 
 
 class CountrViews(APIView):
+    filter_backends = [SearchFilter]
+    search_fields = ['name'] 
 
     def get(self, request):
-        objects_list = Country.objects.all()
-        serializers = CountrySerilaizers(objects_list, many=True)
-        return Response(serializers.data, status=status.HTTP_200_OK)
+        queryset = Country.objects.all()
+        name = request.query_params.get("name", None)
+        if name:
+            queryset = queryset.filter(Q(name__icontains=name))
+            if not queryset.exists():
+                return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = CountrySerilaizers(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class GenderViews(APIView):
@@ -238,11 +245,6 @@ class GenderViews(APIView):
     search_fields = ['name'] 
 
     def get(self, request):
-        queryset = Gender.objects.all()
-        name = request.query_params.get("name", None)
-        if name:
-            queryset = queryset.filter(Q(name__icontains=name))
-            if not queryset.exists():
-                return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
-        serializer = GenderSerializers(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        objects_list = Gender.objects.all()
+        serializers = GenderSerializers(objects_list, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
