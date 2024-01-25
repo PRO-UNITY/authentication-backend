@@ -51,7 +51,7 @@ class UserSignUp(APIView):
         responses={201: "Created - Item created successfully",},
         tags=["auth"],)
     def post(self, request):
-        expected_fields = set(["username", "first_name", "last_name", "email", "country", "phone", "gender", "password", "confirm_password",])
+        expected_fields = set(["username", "email", "country", "phone", "gender", "password", "confirm_password",])
         received_fields = set(request.data.keys())
         unexpected_fields = received_fields - expected_fields
         if unexpected_fields:

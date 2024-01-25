@@ -28,18 +28,13 @@ class GenderSerializers(serializers.ModelSerializer):
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(max_length=50, validators=[
-            MaxLengthValidator(limit_value=50, message="First name cannot exceed 50 characters.")],)
-    last_name = serializers.CharField(max_length=50, validators=[
-            MaxLengthValidator(limit_value=50, message="Last name cannot exceed 50 characters."),])
     username = serializers.CharField(max_length=255, required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())])
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     confirm_password = serializers.CharField(write_only=True, required=True)
     email = serializers.EmailField(validators=[UniqueValidator(queryset=CustomUser.objects.all())])
     class Meta:
         model = CustomUser
-        fields = ["id", "username", "first_name", "last_name", "email", "country", "phone", "gender", "password", "confirm_password",]
-        extra_kwargs = {"first_name": {"required": True}, "last_name": {"required": True}}
+        fields = ["id", "username", "email", "country", "phone", "gender", "password", "confirm_password",]
 
     def create(self, validated_data):
         confirm_password = validated_data.pop('confirm_password', None)
