@@ -1,22 +1,21 @@
 from django.urls import path
-from authen.views import (
-    UserSignUp,
+from authen.views.auth_views import (
     UserSignIn,
-    change_password,
-    UserLogout,
+    UserSignUp,
+    UserProfile,
+)
+from authen.views.forget_password import (
     RequestPasswordRestEmail,
     SetNewPasswordView,
-    UserProfile,
-    CountrViews,
-    GenderViews,
+    change_password,
 
 )
+from authen.views.view import CountrViews, GenderViews
 
 urlpatterns = [
     path('auth/signup', UserSignUp.as_view()),
     path('auth/sigin', UserSignIn.as_view()),
     path('auth/password', change_password),
-    path('auth/logout', UserLogout.as_view()),
     path('auth/password/reset', RequestPasswordRestEmail.as_view()),
     path('auth/password/confirm', SetNewPasswordView.as_view()),
     path('auth/users', UserProfile.as_view()),
