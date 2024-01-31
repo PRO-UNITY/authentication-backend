@@ -176,5 +176,4 @@ SWAGGER_SETTINGS = {
 AUTH_USER_MODEL = "authen.CustomUser"
 
 
-FORCE_SCRIPT_NAME = "/api"
-# Hi
+FORCE_SCRIPT_NAME = "/auth"

@@ -4,7 +4,6 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.validators import MaxLengthValidator
 from authen.models import CustomUser
 from django.contrib.auth import get_user_model
-from authen.serializers.serializer import CountrySerilaizers, GenderSerializers
 
 
 class BaseUserSerializer(serializers.ModelSerializer):
@@ -66,8 +65,6 @@ class UserSigInSerializer(serializers.ModelSerializer):
 
 
 class UserInformationSerializer(BaseUserSerializer):
-    country = CountrySerilaizers(read_only=True)
-    gender = GenderSerializers(read_only=True)
 
     class Meta(BaseUserSerializer.Meta):
         fields = BaseUserSerializer.Meta.fields + ["first_name", "last_name"]

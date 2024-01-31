@@ -10,17 +10,14 @@ from authen.views.forget_password import (
     change_password,
 
 )
-from authen.views.view import CountrViews, GenderViews, UsersViws
+from authen.views.view import UsersViws
 
 urlpatterns = [
-    path('auth/signup', UserSignUp.as_view()),
-    path('auth/sigin', UserSignIn.as_view()),
-    path('auth/password', change_password),
-    path('auth/password/reset', RequestPasswordRestEmail.as_view()),
-    path('auth/password/confirm', SetNewPasswordView.as_view()),
-    path('auth/user', UserProfile.as_view()),
-    path('auth/users', UsersViws.as_view()),
-    path('country', CountrViews.as_view()),
-    path('gender', GenderViews.as_view()),
-
+    path('signup', UserSignUp.as_view()),
+    path('sigin', UserSignIn.as_view()),
+    path('password', change_password),
+    path('password/reset', RequestPasswordRestEmail.as_view()),
+    path('password/confirm', SetNewPasswordView.as_view()),
+    path('user', UserProfile.as_view()),
+    path('users', UsersViws.as_view()),
 ]
